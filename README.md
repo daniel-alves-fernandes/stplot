@@ -10,6 +10,30 @@ over conventional graph scheme packages:
 installs required (including the stplot package itself).
 
 
-```
+``` stata
 sysuse auto 
+twoway scatter price mpg
 ```
+
+![s2color](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/s2color.png)
+
+``` stata
+stplot axes
+twoway scatter price mpg
+```
+
+![axes](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/axes.png)
+
+``` stata
+stplot noaxes
+twoway scatter price mpg
+```
+
+![axes](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/noaxes.png)
+
+``` stata
+stplot box
+twoway scatter price mpg
+```
+
+![axes](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/box.png)
