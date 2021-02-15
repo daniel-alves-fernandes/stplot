@@ -10,6 +10,14 @@ over conventional graph scheme packages:
 installs required (including the stplot package itself).
 
 
+## Syntax
+
+```
+stplot scheme, [colors(colorpalette) symbols(symbolstyle) lines(linestyle) legend(position) nogrid noticks altcontrast name(name)]
+```
+
+## Basic usage
+
 ``` stata
 sysuse auto 
 twoway scatter price mpg
