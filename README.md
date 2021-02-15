@@ -8,3 +8,8 @@ over conventional graph scheme packages:
 - it makes it possible to specify several tweaked versions of a theme to use in different plots.
 - it facilitates the visual reproduction of graphs. The .scheme file contains all the instructions necessary to replicate the look of graphs with no
 installs required (including the stplot package itself).
+
+
+```
+sysuse auto 
+```
