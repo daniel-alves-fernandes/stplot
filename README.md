@@ -37,11 +37,18 @@ stplot noaxes
 twoway scatter price mpg
 ```
 
-![axes](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/noaxes.png)
+![noaxes](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/noaxes.png)
 
 ``` stata
 stplot box
 twoway scatter price mpg
 ```
 
-![axes](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/box.png)
+![box](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/box.png)
+
+``` stata
+stplot axes, nogrid
+twoway scatter price mpg
+```
+
+![nogrid](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/nogrid.png)
