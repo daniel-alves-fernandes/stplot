@@ -9,12 +9,29 @@ over conventional graph scheme packages:
 - it facilitates the visual reproduction of graphs. The .scheme file contains all the instructions necessary to replicate the look of graphs with no
 installs required (including the stplot package itself). Just share this file with your peers!
 
+## Install
+
+This package requires three packages to work: 
+
+- [grstyle](http://repec.sowi.unibe.ch/stata/grstyle/index.html): stplot uses grstyle settings to create the graph styles.
+- [palettes](http://repec.sowi.unibe.ch/stata/palettes/index.html): program to manage colors, symbol and linestyles within Stata.
+- [colrspace](https://github.com/benjann/colrspace): program to manage of color-spaces within Mata. Palettes requires this package to run.
+
+To install them, just type this into Stata:
+
+```
+ssc install grstyle
+ssc install colrspace
+ssc install palettes
+```
 
 ## Syntax
 
 ```
 stplot scheme, [colors(colorpalette) symbols(symbolstyle) lines(linestyle) legend(position) nogrid noticks altcontrast name(name)]
 ```
+
+Type `help stplot` in Stata to have a detailed description of all the options.
 
 ## Basic usage
 
