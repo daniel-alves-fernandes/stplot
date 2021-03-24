@@ -25,7 +25,7 @@ ssc install colrspace
 ssc install palettes
 ```
 
-After installing these packages, put stplot.ado and stplot.sthlp in your working directory or your personal Stata directory.
+After installing these packages, put `stplot.ado` and `stplot.sthlp` in your working directory or your personal Stata directory.
 
 ## Syntax
 
