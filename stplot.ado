@@ -1,6 +1,6 @@
 *******************************************************************************
 * stplot
-* version 3.2.1
+* version 3.2.2
 
 * author: Daniel Fernandes
 * contact: daniel.fernandes@eui.eu
@@ -19,8 +19,18 @@ program define stplot
   * Required packages
   foreach package in grstyle colorpalette{
     capture: which `package'
-    if (_rc == 111) noisily display as error  ///
-    "Packages required: grstyle, colorpalette, and colorspace"
+    if (_rc == 0){
+      noisily display as text  ///
+      "Packages required: grstyle, colorpalette, and colorspace. " ///
+      "Type {it:install} to install" _request(_query)
+      
+      if ("`query'" == "install"){
+        ssc install grstyle, replace
+        ssc install colrspace, replace
+        ssc install palettes, replace
+      }
+      else exit
+    }
   }
 
   * Initialize style
