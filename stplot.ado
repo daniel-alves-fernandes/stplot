@@ -19,7 +19,7 @@ program define stplot
   * Required packages
   foreach package in grstyle colorpalette{
     capture: which `package'
-    if (_rc == 0){
+    if (_rc == 111){
       noisily display as text  ///
       "Packages required: grstyle, colorpalette, and colorspace. " ///
       "Type {it:install} to install" _request(_query)
