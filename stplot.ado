@@ -1,6 +1,6 @@
 *******************************************************************************
 * stplot
-* version 4.0
+* version 4.1
 
 * author: Daniel Fernandes
 * contact: daniel.fernandes@eui.eu
@@ -11,7 +11,7 @@ program define stplot
 
   syntax name(name=scheme),                                     ///
   [Colors(string asis) Symbols(string asis) Lines(string asis)] ///
-  [LEGend(string) nogrid noticks altcontrast]                   ///
+  [LEGend(string) nogrid Ticks(string) altcontrast]                   ///
   [Background(string)] [Name(string)]
 
   version 16
@@ -52,6 +52,8 @@ program define stplot
 
   if ("`grid'" == "nogrid") local grid nogrid
   else local grid grid
+
+  * Schemes
   if ("`scheme'" == "noaxes"){
     grstyle set plain, horizontal `grid'
     grstyle set linewidth 0 : axisline
@@ -74,11 +76,19 @@ program define stplot
     grstyle set linewidth 0 : axisline
     grstyle color major_grid white
     grstyle set color white: tick minortick
-    grstyle set size 1: tick minortick
     if ("`background'" == "") local background "234 234 241"
     grstyle color plotregion "`background'"
   }
-  if ("`ticks'" == "noticks") grstyle set size 0: tick minortick
+
+  * Ticks
+  if inlist("`ticks'","","off","inside","outside"){
+    if ("`ticks'" == "off")    grstyle set size 0: tick minortick
+    if ("`ticks'" == "inside") grstyle tickposition axis_tick inside
+  }
+  else{
+    noisily: display as error "option {bf:ticks} incorrectly specified"
+    error 198
+  }
 
   * Legend
   if !inlist("`legend'","","off","inside","bottom","side"){
