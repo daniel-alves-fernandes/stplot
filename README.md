@@ -27,7 +27,7 @@ ssc install palettes
 
 You can download these packages manually. After installing these packages, put `stplot.ado` and `stplot.sthlp` in your working directory or your personal Stata directory.
 
-If these packages are not on your system in the first run, `stplot` will prompt you to install them.
+If these packages are not on your system in the first run, `stplot` will prompt you to install them. In this case, the installation process will be handled automatically by the program.
 
 ## Syntax
 
