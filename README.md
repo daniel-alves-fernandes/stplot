@@ -30,7 +30,7 @@ After installing these packages, put `stplot.ado` and `stplot.sthlp` in your wor
 ## Syntax
 
 ```
-stplot scheme, [colors(colorpalette) symbols(symbolstyle) lines(linestyle) legend(position) nogrid noticks altcontrast name(name)]
+stplot scheme, [colors(colorpalette) symbols(symbolstyle) lines(linestyle) legend(position) nogrid noticks altcontrast background(color) name(name)]
 ```
 
 Type `help stplot` in Stata to have a detailed description of all the options.
@@ -71,3 +71,10 @@ twoway scatter price mpg
 ```
 
 ![nogrid](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/nogrid.png)
+
+```stata
+stplot mesh, background("234 234 241")
+twoway scatter price mpg
+```
+
+![nogrid](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/mesh.png)
