@@ -14,8 +14,9 @@
   [{bf:{ul:c}olors(}{help colorpalette:colors}{bf:)}
   {bf:{ul:s}ymbols(}{help symbolstyle:symbols}{bf:)}
   {bf:{ul:l}ines(}{help linepatternstyle:lines}{bf:)}
-  {bf:legend(}{it:position}{bf:)}
+  {bf:{ul:leg}end(}{it:position}{bf:)}
   {bf:nogrid} {bf:noticks} {bf:altcontrast}
+  {bf:{ul:b}ackground(}color{bf:)}
   {bf:{ul:n}ame(}{it:name}{bf:)}
 
 
@@ -28,7 +29,8 @@ Three base schemes are available with this command:
 {pstd}
 1. {it:noaxes} draws plots without axes lines and ticks{break}
 2. {it:axes} draws lines along the x-axis and the y-axis{break}
-3. {it:box} draws a frame around all the sides of the plot region
+3. {it:box} draws a frame around all the sides of the plot region{break}
+4. {it:mesh} draws white axes lines on a coloured background
 
 {pstd}
 {it:stplot} is not a theme.
@@ -52,7 +54,7 @@ This approach offers three distinct advantages over conventional graph scheme pa
 {bf:{ul:l}ines(}{help linepatternstyle:lines}{bf:)}: specifies the line patterns to be used in line elements.
 
 {pstd}
-{bf:legend(}{it:position}{bf:)}: four alternatives available:{break}
+{bf:{ul:leg}end(}{it:position}{bf:)}: four alternatives available:{break}
 1. {it:off} turns off the legend{break}
 2. {it:inside} draws the legend inside the plot region{break}
 3. {it:side} draws the legend outside of the plot region on its right side{break}
@@ -66,6 +68,9 @@ This approach offers three distinct advantages over conventional graph scheme pa
 
 {pstd}
 {bf:altcontrast}: changes the look of certain outline elements from white to black (e.g. outline of histogram bars, petals in sunflower graphs).
+
+{pstd}
+{bf:{ul:b}ackground}: specifies the background colour of the plot region. {it:Only allowed in scheme mesh.}
 
 {pstd}
 {bf:{ul:n}ame(}{it:name}{bf:)}: saves a .scheme file with the specified name. If this option is not specified, the command saves the scheme instructions on file with the name {it:stataplot-scheme.scheme}.
