@@ -1,6 +1,6 @@
 *******************************************************************************
 * stplot
-* version 3.2.2
+* version 4.0
 
 * author: Daniel Fernandes
 * contact: daniel.fernandes@eui.eu
@@ -11,8 +11,8 @@ program define stplot
 
   syntax name(name=scheme),                                     ///
   [Colors(string asis) Symbols(string asis) Lines(string asis)] ///
-  [legend(string) nogrid noticks altcontrast]                   ///
-  [Name(string)]
+  [LEGend(string) nogrid noticks altcontrast]                   ///
+  [Background(string)] [Name(string)]
 
   version 16
 
@@ -23,7 +23,6 @@ program define stplot
       noisily display as text  ///
       "Packages required: grstyle, colorpalette, and colorspace. " ///
       "Type {it:install} to install" _request(_query)
-      
       if ("`query'" == "install"){
         ssc install grstyle, replace
         ssc install colrspace, replace
@@ -40,8 +39,14 @@ program define stplot
   else                grstyle init stataplot, replace
 
   * Background and coordinate system
-  if !inlist("`scheme'","noaxes","axes","box"){
+  if !inlist("`scheme'","noaxes","axes","box","mesh"){
     noisily: display as error "available schemes: noaxes, axes, box"
+    exit 197
+  }
+
+  if ("`scheme'" != "mesh") & ("`background'" != ""){
+    noisily: display as error ///
+    "option {bf:background} cannot be combined with scheme `scheme'"
     exit 197
   }
 
@@ -63,6 +68,15 @@ program define stplot
     grstyle set plain, box horizontal `grid'
     grstyle color major_grid black%05
     grstyle set linewidth 0 : axisline
+  }
+  if ("`scheme'" == "mesh"){
+    grstyle set plain, horizontal `grid'
+    grstyle set linewidth 0 : axisline
+    grstyle color major_grid white
+    grstyle set color white: tick minortick
+    grstyle set size 1: tick minortick
+    if ("`background'" == "") local background "234 234 241"
+    grstyle color plotregion "`background'"
   }
   if ("`ticks'" == "noticks") grstyle set size 0: tick minortick
 
