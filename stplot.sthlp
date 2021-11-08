@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 3.0.1  23dec2020}{...}
+{* *! version 3.1  08nov2021}{...}
 
 {title:Stata Plot}
 
@@ -15,7 +15,8 @@
   {bf:{ul:s}ymbols(}{help symbolstyle:symbols}{bf:)}
   {bf:{ul:l}ines(}{help linepatternstyle:lines}{bf:)}
   {bf:{ul:leg}end(}{it:position}{bf:)}
-  {bf:nogrid} {bf:noticks} {bf:altcontrast}
+  {bf:{ul:t}icks(}{it:option}{bf:)}
+  {bf:nogrid} {bf:altcontrast}
   {bf:{ul:b}ackground(}color{bf:)}
   {bf:{ul:n}ame(}{it:name}{bf:)}
 
@@ -64,7 +65,10 @@ This approach offers three distinct advantages over conventional graph scheme pa
 {bf:nogrid}: turns all the gridlines off.
 
 {pstd}
-{bf:noticks}: turns major and minor ticks off. {it: stplot noaxes} uses this option by default.
+{bf:{ul:t}icks(}{it:option}{bf:)}: specify style of major and minor ticks. Three alternative available:{break}
+1. {it:outside}: draws ticks ouside of the axis line. {it:Default option if this option is not specified.}{break}
+2. {it:inside}: draws ticks inside of the axis line.{break}
+3. {it:off}: turns ticks off. {it:stplot noaxes} uses this option by default.
 
 {pstd}
 {bf:altcontrast}: changes the look of certain outline elements from white to black (e.g. outline of histogram bars, petals in sunflower graphs).
