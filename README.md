@@ -75,7 +75,7 @@ twoway scatter price mpg
 ![nogrid](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/nogrid.png)
 
 ```stata
-stplot mesh, background("234 234 241")
+stplot mesh
 twoway scatter price mpg
 ```
 
