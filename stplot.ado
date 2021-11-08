@@ -1,6 +1,6 @@
 *******************************************************************************
 * stplot
-* version 4.1
+* version 4.1.1
 
 * author: Daniel Fernandes
 * contact: daniel.fernandes@eui.eu
@@ -83,6 +83,10 @@ program define stplot
   * Ticks
   if inlist("`ticks'","","off","inside","outside"){
     if ("`ticks'" == "off")    grstyle set size 0: tick minortick
+    else{
+        grstyle set size 0.5: minortick
+        grstyle set size 1.2: tick
+      }
     if ("`ticks'" == "inside") grstyle tickposition axis_tick inside
   }
   else{
