@@ -1,6 +1,6 @@
 *******************************************************************************
 * stplot
-* version 4.1.1
+* version 4.1.2
 
 * author: Daniel Fernandes
 * contact: daniel.fernandes@eui.eu
@@ -11,7 +11,7 @@ program define stplot
 
   syntax name(name=scheme),                                     ///
   [Colors(string asis) Symbols(string asis) Lines(string asis)] ///
-  [LEGend(string) nogrid Ticks(string) altcontrast]                   ///
+  [LEGend(string) nogrid Ticks(string) altcontrast]             ///
   [Background(string)] [Name(string)]
 
   version 16
@@ -110,6 +110,8 @@ program define stplot
     grstyle numstyle legend_cols 1
     grstyle gsize legend_key_xsize vsmall
     grstyle gsize legend_key_ysize vsmall
+    if ("`scheme'" == "mesh") grstyle linewidth legend vvthin
+    else                      grstyle linewidth legend vthin
   }
   if ("`legend'" == "side"){
     grstyle set legend, nobox
