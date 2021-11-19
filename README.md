@@ -11,6 +11,12 @@ installs required (including the stplot package itself). Just share this file wi
 
 ## Install
 
+To install this package run the following command:
+
+```
+net install stplot, from("https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/")
+```
+
 This package requires three packages to work: 
 
 - [grstyle](http://repec.sowi.unibe.ch/stata/grstyle/index.html): stplot uses grstyle settings to create the graph styles.
@@ -24,8 +30,6 @@ ssc install grstyle
 ssc install colrspace
 ssc install palettes
 ```
-
-You can download these packages manually. After installing these packages, put `stplot.ado` and `stplot.sthlp` in your working directory or your personal Stata directory.
 
 If these packages are not on your system in the first run, `stplot` will prompt you to install them. In this case, the installation process will be handled automatically by the program.
 
