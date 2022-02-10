@@ -1,6 +1,6 @@
 *******************************************************************************
 * stplot
-* version 4.1.2
+* version 4.1.3
 
 * author: Daniel Fernandes
 * contact: daniel.fernandes@eui.eu
