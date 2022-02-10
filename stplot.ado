@@ -58,6 +58,7 @@ program define stplot
     grstyle set plain, horizontal `grid'
     grstyle set linewidth 0 : axisline
     grstyle set size 0: tick minortick
+    grstyle set color black%05: tick minortick
     grstyle color major_grid black%05
     if ("`altcontrast'" == "") grstyle color tick_label black%10
     else                       grstyle color tick_label black
