@@ -1,20 +1,24 @@
 *******************************************************************************
 * stplot
-* version 4.1.3
+* version 5.0.1
+* Requires Stata 18
 
 * author: Daniel Fernandes
-* contact: daniel.fernandes@eui.eu
+* contact: d.alves.fernandes@law.leidenuniv.nl
 *******************************************************************************
 
 capture: program drop stplot
 program define stplot
 
+  * Syntax
   syntax name(name=scheme),                                     ///
   [Colors(string asis) Symbols(string asis) Lines(string asis)] ///
-  [LEGend(string) nogrid Ticks(string) altcontrast]             ///
+  [LEGend(string) nogrid Ticks(string) size(string)]           ///
   [Background(string)] [Name(string)]
 
-  version 16
+  **** Programmer options ****
+  * Required version
+  version 18
 
   * Required packages
   foreach package in grstyle colorpalette{
@@ -32,15 +36,9 @@ program define stplot
     }
   }
 
-  * Initialize style
-  grstyle clear
-  set scheme s2color
-  if ("`name'" != "") grstyle init `name'   , replace
-  else                grstyle init stataplot, replace
-
-  * Background and coordinate system
+  * Error checking
   if !inlist("`scheme'","noaxes","axes","box","mesh"){
-    noisily: display as error "available schemes: noaxes, axes, box"
+    noisily: display as error "available schemes: noaxes, axes, box, mesh"
     exit 197
   }
 
@@ -51,51 +49,84 @@ program define stplot
   }
 
   if ("`grid'" == "nogrid") local grid nogrid
-  else local grid grid
+  if ("`size'" != ""){
+    local anchor = strpos("`size'"," ")
+    local ysize = strtrim(substr("`size'",1,`anchor'))
+    local xsize = strtrim(substr("`size'",`anchor',.))
+  }
+  else{
+    * These measurements fit in a A4 paper with 3cm margins on each side
+    local ysize 112.5mm
+    local xsize 150mm
+  }
 
-  * Schemes
+  **** Graph settings ****
+  * Initialize style
+  grstyle clear
+  set scheme stcolor
+  if ("`name'" != "") grstyle init `name', replace
+  else grstyle init stataplot, replace
+
+  * Graph size
+  grstyle set graphsize `ysize' `xsize'
+
+  * Base scheme
   if ("`scheme'" == "noaxes"){
     grstyle set plain, horizontal `grid'
+    grstyle linepattern major_grid solid
+    grstyle linepattern xyline solid
+    grstyle color major_grid black%5
+
     grstyle set linewidth 0 : axisline
-    grstyle set size 0: tick minortick
-    grstyle set color black%05: tick minortick
-    grstyle color major_grid black%05
-    if ("`altcontrast'" == "") grstyle color tick_label black%10
-    else                       grstyle color tick_label black
+    grstyle color tick_label black
   }
   if ("`scheme'" == "axes"){
     grstyle set plain, horizontal `grid'
-    grstyle color major_grid black%05
+    grstyle linepattern major_grid solid
+    grstyle linepattern xyline solid
+    grstyle color major_grid black%5
   }
   if ("`scheme'" == "box"){
     grstyle set plain, box horizontal `grid'
-    grstyle color major_grid black%05
-    grstyle set linewidth 0 : axisline
+    grstyle linepattern major_grid solid
+    grstyle linepattern xyline solid
+    grstyle color major_grid black%5
+
+    grstyle set linewidth 0: axisline
   }
   if ("`scheme'" == "mesh"){
     grstyle set plain, horizontal `grid'
-    grstyle set linewidth 0 : axisline
-    grstyle color major_grid white
-    grstyle set color white: tick minortick
+    grstyle linepattern major_grid solid
+    grstyle linepattern xyline solid
+    grstyle set color white: major_grid
+
+    grstyle set linewidth 0: axisline
     if ("`background'" == "") local background "234 234 241"
     grstyle color plotregion "`background'"
   }
 
-  * Ticks
-  if inlist("`ticks'","","off","inside","outside"){
-    if ("`ticks'" == "off")    grstyle set size 0: tick minortick
-    else{
-        grstyle set size 0.5: minortick
-        grstyle set size 1.2: tick
-      }
-    if ("`ticks'" == "inside") grstyle tickposition axis_tick inside
-  }
-  else{
-    noisily: display as error "option {bf:ticks} incorrectly specified"
-    error 198
-  }
+  ** Global settings
+  * Transparent confidence intervals
+  grstyle set ci, opacity(20 20)
 
-  * Legend
+  * Line width
+  grstyle set linewidth thin: refline refmarker refmarkline xyline major_grid
+  grstyle set linewidth vthin: pmark pboxmark pdotmark matrixmark histogram
+  grstyle set linewidth none: parea pbar ci_area ci2_area
+
+  * Colours, symbols, and lines
+  if ("`colors'" != "")  grstyle set color `colors'
+  if ("`symbols'" != "") grstyle set symbol `symbols'
+  if ("`lines'" != "")   grstyle set lpattern `lines'
+
+  * Spanning
+  grstyle yesno title_span yes
+  grstyle yesno subtitle_span no
+  grstyle yesno caption_span no
+  grstyle yesno note_span no
+
+  ** Other options
+  * Legends
   if !inlist("`legend'","","off","inside","bottom","side"){
     noisily{
       display as error "available legend options: off, inside, bottom, side"
@@ -129,72 +160,22 @@ program define stplot
     grstyle gsize legend_key_ysize vsmall
   }
 
-  * Colour scheme
-  grstyle set color `colors'
-  local color "`r(p1)'"
-  if ("`altcontrast'" == "") local base white
-  else                       local base black
-
-  local options:   display strpos("`colors'",",")
-  if (`options' == 0) colorpalette `colors', nograph
-  else                colorpalette `colors'  nograph
-
-  colorpalette "`r(p1)'", nograph forcergb
-  local pcolor :   display `r(p)'
-  local opacity:   display strpos("`pcolor'","%")
-  if (`opacity' != 0){
-    if(regexm("`pcolor'","%[0-9]*")) local opacity = regexs(0)
-    local opacity: display subinstr("`opacity'","%","",.)
-    local pcolor:  display regexr("`pcolor'","%[0-9]*","")
+  * Ticks
+  if inlist("`ticks'","","off","inside","outside","transparent"){
+    if ("`ticks'" == "off") grstyle set size 0: tick minortick
+    else{
+        grstyle set size 1.2: tick
+        grstyle set size 0.5: minortick
+      }
+    if ("`ticks'" == "inside") grstyle tickposition axis_tick inside
+    if ("`ticks'" == "transparent"){
+      grstyle color tick black%0
+      grstyle color minortick black%0
+    }
   }
-  else local opacity 100
-
-  tokenize `pcolor', parse(" ")
-  local pbright = (0.21 * `1') + (0.72 * `2') + (0.07 * `3')
-  local m1      = (0.1 + (255-`pbright')/1000) + (`pbright' / 255)
-  local m2      = 1.2 * `m1'
-  local m3      = 3 * `m1'
-
-  * Sunflower plots
-  colorpalette "`pcolor'", intensify(`m1' `m2' `m3') opacity(`opacity') nograph
-  forvalues i = 1/3{
-    local r`i': display "`r(p`i')'"
+  else{
+    noisily: display as error "option {bf:ticks} incorrectly specified"
+    error 198
   }
-  grstyle symbol sunflower smdiamond_hollow
-  grstyle set color "`base'": sunflowerlf sunflowerdf
-  grstyle set color "`r1'": sunflower
-  grstyle set color "`r2'": sunflowerlb
-  grstyle set color "`r3'": sunflowerdb
 
-  * Histograms
-  grstyle color histogram "`pcolor'", opacity(`opacity')
-  grstyle color histogram_line `base'
-  grstyle linewidth histogram thin
-
-  * Matrices
-  grstyle seriesstyle matrix p1
-
-  * Confidence intervals
-  local ci1 = floor((0.2 + (255-`pbright') * 0.4/255) * (`opacity'/100) * 100)
-  local ci2 = floor((0.1 + (255-`pbright') * 0.4/255) * (`opacity'/100) * 100)
-  grstyle set color "`pcolor'", opacity(`ci1'): ci_area
-  grstyle set color "`pcolor'", opacity(`ci2'): ci2_area
-
-  * Reference lines
-  grstyle set color black: refline refmarker refmarkline xyline
-
-  * Outline thickness of markers and areas
-  grstyle set linewidth thin: refline refmarker refmarkline xyline
-  grstyle set linewidth vthin: pmark pboxmark pdotmark matrixmark histogram
-  grstyle set linewidth none: parea pbar ci_area ci2_area
-
-  * Symbols and lines scheme
-  if ("`symbols'" != "") grstyle set symbol `symbols'
-  if ("`lines'" != "")   grstyle set lpattern `lines'
-
-  * Other options
-  grstyle yesno title_span yes
-  grstyle yesno subtitle_span no
-  grstyle yesno caption_span yes
-  grstyle yesno note_span yes
 end

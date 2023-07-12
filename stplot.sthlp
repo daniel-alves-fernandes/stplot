@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 3.1  08nov2021}{...}
+{* *! version 4.0  12jul2023}{...}
 
 {title:Stata Plot}
 
@@ -16,9 +16,9 @@
   {bf:{ul:l}ines(}{help linepatternstyle:lines}{bf:)}
   {bf:{ul:leg}end(}{it:position}{bf:)}
   {bf:{ul:t}icks(}{it:option}{bf:)}
-  {bf:nogrid} {bf:altcontrast}
   {bf:{ul:b}ackground(}color{bf:)}
-  {bf:{ul:n}ame(}{it:name}{bf:)}
+  {bf:size(}{it:ysize} {it:xsize}{bf:)}
+  {bf:{ul:n}ame(}{it:name}{bf:)]}
 
 
 {title:Description}
@@ -28,7 +28,7 @@
 Three base schemes are available with this command:
 
 {pstd}
-1. {it:noaxes} draws plots without axes lines and ticks{break}
+1. {it:noaxes} draws plots without axes lines{break}
 2. {it:axes} draws lines along the x-axis and the y-axis{break}
 3. {it:box} draws a frame around all the sides of the plot region{break}
 4. {it:mesh} draws white axes lines on a coloured background
@@ -65,16 +65,19 @@ This approach offers three distinct advantages over conventional graph scheme pa
 {bf:nogrid}: turns all the gridlines off.
 
 {pstd}
-{bf:{ul:t}icks(}{it:option}{bf:)}: specify style of major and minor ticks. Three alternative available:{break}
+{bf:{ul:t}icks(}{it:option}{bf:)}: specify style of major and minor ticks. Four alternative available:{break}
 1. {it:outside}: draws ticks ouside of the axis line. {it:Default option if this option is not specified.}{break}
 2. {it:inside}: draws ticks inside of the axis line.{break}
-3. {it:off}: turns ticks off. {it:stplot noaxes} uses this option by default.
-
-{pstd}
-{bf:altcontrast}: changes the look of certain outline elements from white to black (e.g. outline of histogram bars, petals in sunflower graphs).
+3. {it:transparent}: hides ticks but keeps the space between axes and labels {break}
+4. {it:off}: turns ticks off. {it:stplot noaxes} uses this option by default.
 
 {pstd}
 {bf:{ul:b}ackground}: specifies the background colour of the plot region. {it:Only allowed in scheme mesh.}
+
+{pstd}
+{bf:size(}{it:ysize} {it:xsize}{bf:)}: specify the size of the graph. {it:ysize} and {it:xsize} are numeric values followed by units {it:in}, {it:pt}, or {it:cm}. When units are not specified, {it:in} is assumed.
+By default, {it:stplot} defines 112.5mm by 150mm. The graph area has a 4:3 aspect ratio. The horizontal size fills the text width of a A4 paper with a 3cm margin on each side.
+
 
 {pstd}
 {bf:{ul:n}ame(}{it:name}{bf:)}: saves a .scheme file with the specified name. If this option is not specified, the command saves the scheme instructions on file with the name {it:stataplot-scheme.scheme}.
@@ -90,4 +93,3 @@ daniel.fernandes@eui.eu
 
 {pstd}
 {it: A special thanks to Ben Jann, the creator of the {help grstyle} and the {help colorpalette} packages.}
-
