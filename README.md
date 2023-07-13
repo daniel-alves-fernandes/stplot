@@ -36,7 +36,7 @@ If these packages are not on your system in the first run, `stplot` will prompt 
 ## Syntax
 
 ```
-stplot scheme, [colors(colorpalette) symbols(symbolstyle) lines(linestyle) legend(position) ticks(option) nogrid altcontrast background(color) name(name)]
+stplot scheme, [colors(colorpalette) symbols(symbolstyle) lines(linestyle) legend(position) ticks(option) nogrid background(color) size(ysize xsize) name(name)]
 ```
 
 Type `help stplot` in Stata to have a detailed description of all the options.
