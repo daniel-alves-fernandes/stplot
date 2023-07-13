@@ -48,7 +48,7 @@ sysuse auto
 twoway scatter price mpg
 ```
 
-![s2color](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/s2color.png)
+![default](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/default.png)
 
 ``` stata
 stplot axes
@@ -58,7 +58,14 @@ twoway scatter price mpg
 ![axes](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/axes.png)
 
 ``` stata
-stplot noaxes
+stplot axes, ticks(off) nogrid
+twoway scatter price mpg
+```
+
+![axes2](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/axes2.png)
+
+``` stata
+stplot noaxes, ticks(transparent)
 twoway scatter price mpg
 ```
 
@@ -71,16 +78,18 @@ twoway scatter price mpg
 
 ![box](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/box.png)
 
-``` stata
-stplot axes, nogrid
-twoway scatter price mpg
-```
-
-![nogrid](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/nogrid.png)
 
 ```stata
-stplot mesh
+stplot mesh, background("245 245 245")
 twoway scatter price mpg
 ```
 
-![nogrid](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/mesh.png)
+![mesh](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/mesh.png)
+
+
+```stata
+stplot mesh, background("234 234 241") ticks(transparent) color(navy)
+twoway scatter price mpg
+```
+
+![mesh2](https://raw.githubusercontent.com/daniel-alves-fernandes/stplot/main/examples/mesh2.png)
